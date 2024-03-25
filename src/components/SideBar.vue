@@ -3,6 +3,7 @@
         <h1>
             <img src="../assets/logo.png" alt="logo">
         </h1>
+        <button class="button" @click="toggleDarkMode">Dark Mode</button>
     </header>
 </template>
 
@@ -10,9 +11,15 @@
 import { defineComponent } from 'vue';
 export default defineComponent({
     name: 'SideBar',
+    methods: {
+        toggleDarkMode() {
+            this.$emit('toggle-dark-mode');
+            alert('Dark mode toggled');
+        }
+    }
 })
 </script>
-header
+
 <style scoped>
 header {
     padding: 1rem;

@@ -1,5 +1,5 @@
 <template>
-    <div class="box">
+    <TaskBox>
         <div class="columns">
             <div class="column is-7">
                 {{ task.description || 'Task without description' }}
@@ -8,18 +8,19 @@
                 <tracker-stopwatch :timeInSeconds="task.timeInSeconds" />
             </div>
         </div>
-    </div>
+    </TaskBox>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import TrackerStopwatch from './TrackerStopwatch.vue';
 import ITask from '../interfaces/ITask';
+import TaskBox from './TaskBox.vue';
 
 export default defineComponent({
     name: 'JobTask',
     components: {
-        TrackerStopwatch
+        TrackerStopwatch, TaskBox
     },
     props: {
         task: {
@@ -29,11 +30,3 @@ export default defineComponent({
     }
 });
 </script>
-
-<style scoped>
-.box {
-    background-color: #294057;
-    padding: 1.25rem;
-    border-radius: 8px;
-}
-</style>
