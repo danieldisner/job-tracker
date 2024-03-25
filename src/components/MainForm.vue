@@ -5,23 +5,7 @@
                 <input class="input" type="text" placeholder="What needs to be done?" v-model="description">
             </div>
             <div class="column">
-                <div class="is-flex is-align-items-center is-justify-content-space-between">
-                    <section>
-                        <strong>{{ elapsedTime }}</strong>
-                    </section>
-                    <button class="button" @click="start">
-                        <span class="icon">
-                            <i class="fas fa-play"></i>
-                        </span>
-                        <span>Play</span>
-                    </button>
-                    <button class="button" @click="stop">
-                        <span class="icon">
-                            <i class="fas fa-stop"></i>
-                        </span>
-                        <span>Stop</span>
-                    </button>
-                </div>
+                <TrackerTimer @timerFinished="taskEnded"></TrackerTimer>
             </div>
         </div>
     </div>
@@ -29,27 +13,24 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import TrackerTimer from './TrackerTimer.vue';
 export default defineComponent({
     name: 'MainForm',
+    emits: ['onSaveTask'],
+    components: {
+        TrackerTimer
+    },
     data() {
         return {
-            timeInSeconds: 0,
-            stopwatch: 0,
-        }
-    },
-    computed: {
-        elapsedTime(): string {
-            return new Date(this.timeInSeconds * 1000).toISOString().substring(11, 19);
+            description: ''
         }
     },
     methods: {
-        start() {
-            this.stopwatch = setInterval(() => {
-                this.timeInSeconds += 1;
-            }, 1000)
-        },
-        stop() {
-            clearInterval(this.stopwatch);
+        taskEnded(elapsedTime: number): void {
+            this.$emit('onSaveTask', {
+                timeInSeconds: elapsedTime,
+                description: this.description
+            })
         }
     }
 });
