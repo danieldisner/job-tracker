@@ -1,6 +1,6 @@
 <template>
     <section>
-        <strong class="display">{{ elapsedTime }}</strong>
+        <strong class="display"><i class="fas fa-stopwatch"></i> {{ elapsedTime }}</strong>
     </section>
 </template>
 
@@ -27,4 +27,3 @@ export default defineComponent({
     }
 })
 </script>
-<style scoped></style>
