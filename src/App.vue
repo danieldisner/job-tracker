@@ -1,9 +1,9 @@
 <template>
-  <main class="columns is-gapless is-multiline">
+  <main class="columns is-gapless is-multiline main-container" :data-theme="darkMode ? 'dark' : 'light'">
     <div class="column is-one-quarter">
       <side-bar @toggle-dark-mode="toggleDarkMode"></side-bar>
     </div>
-    <div class="column is-three-quarter" :class="{ 'theme-dark': false }">
+    <div class="column is-three-quarter">
       <main-form @onSaveTask="saveTask" />
       <div class="list">
         <job-task v-for="(task, index) in tasks" :key="index" :task="task"></job-task>
@@ -55,9 +55,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style>
-.list {
-  padding: 1.25rem;
-}
-</style>

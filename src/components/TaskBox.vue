@@ -1,5 +1,5 @@
 <template>
-    <div class="box has-text-weight-bold">
+    <div class="box task-box has-text-weight-bold">
         <slot></slot>
     </div>
 </template>
@@ -13,7 +13,6 @@ export default defineComponent({
 </script>
 <style scoped>
 .box {
-    background-color: #294057;
     padding: 1.25rem;
     border-radius: 8px;
 }

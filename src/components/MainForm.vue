@@ -35,3 +35,16 @@ export default defineComponent({
     }
 });
 </script>
+<style scoped>
+.box {
+    padding: 1.25rem;
+    border-radius: 8px;
+    background-color: var(--bulma-scheme-main);
+    color: var(--light-text);
+}
+
+[data-theme="dark"] .box {
+    background-color: var(--bulma-scheme-main);
+    color: var(--dark-text);
+}
+</style>

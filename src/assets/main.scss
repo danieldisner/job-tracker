@@ -1,1 +1,34 @@
 @import '~bulma';
+
+:root{
+    --light-bg:#f8f9fa;
+    --light-text:#212529;
+    --dark-bg:#343a40;
+    --dark-text:#f8f9fa;
+    --light-box-bg:#6ea8ff;
+    --dark-box-bg:#05456a;
+}
+
+.main-container {
+    background-color: var(--light-bg);
+    color: var(--light-text);
+}
+
+.box {
+    background-color: var(--light-box-bg);
+    color: var(--light-text);
+}
+
+.list {
+    padding: 1.25rem;
+}
+
+[data-theme="dark"] .main-container {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+
+[data-theme="dark"] .box {
+    background-color: var(--dark-box-bg);
+    color: var(--dark-text);
+}
