@@ -1,14 +1,24 @@
 @import '~bulma';
 
 :root {
+    --light-panel-bg: #f8f9fa;
     --light-bg: #f8f9fa;
     --light-text: #212529;
+    --light-link: #0a3046;
+    --light-box-bg: #6ea8ff;
+    --light-hover: #05456a;
+    --light-active: #f8f9fa;
+
+    --dark-panel-bg: #0a3046;
     --dark-bg: #343a40;
     --dark-text: #f8f9fa;
-    --light-box-bg: #6ea8ff;
+    --dark-link: #6ea8ff;
     --dark-box-bg: #05456a;
+    --dark-hover: #6ea8ff;
+    --dark-active: #f8f9fa;
 }
 
+// Estilos padrão para o modo claro
 .main-container {
     background-color: var(--light-bg);
     color: var(--light-text);
@@ -26,15 +36,52 @@
     padding: 1.25rem;
 }
 
-[data-theme="dark"] .main-container {
-    background-color: var(--dark-bg);
-    color: var(--dark-text);
+.panel-heading {
+    color: var(--light-text);
+    background-color: var(--light-panel-bg);
 }
 
-[data-theme="dark"] .box, [data-theme="dark"] .display {
-    color: var(--dark-text);
+.link {
+    color: var(--light-link);
 }
 
-[data-theme="dark"] .box {
-    background-color: var(--dark-box-bg);
+.link:hover {
+    color: var(--light-hover);
+}
+
+.link.router-link-active {
+    color: var(--light-active);
+}
+
+// Estilos para o modo escuro
+[data-theme="dark"] {
+    .main-container {
+        background-color: var(--dark-bg);
+        color: var(--dark-text);
+    }
+
+    .panel-heading {
+        color: var(--dark-text);
+        background-color: var(--dark-panel-bg);
+    }
+
+    .box, .display {
+        color: var(--dark-text);
+    }
+
+    .box {
+        background-color: var(--dark-box-bg);
+    }
+
+    .link {
+        color: var(--dark-link);
+    }
+
+    .link:hover {
+        color: var(--dark-hover);
+    }
+
+    .link.router-link-active {
+        color: var(--dark-active);
+    }
 }

@@ -3,7 +3,28 @@
         <h1>
             <img src="../assets/logo.png" alt="logo">
         </h1>
-        <button class="button" @click="toggleDarkMode">Dark Mode</button>
+        <button class="button" @click="toggleDarkMode">{{ darkModeText }}</button>
+        <nav class="panel is-primary mt-5">
+            <p class="panel-heading has-text-centered">
+                Menu
+            </p>
+            <ul class="panel-blocks-item">
+                <li>
+                    <router-link to="/" class="link is-block is-fullwidth is-primary">
+                        <i class="fas fa-tasks"></i>
+                        <span>Tasks</span>
+                    </router-link>
+                </li>
+            </ul>
+            <ul class="panel-blocks-item">
+                <li>
+                    <router-link to="/projects" class="link is-block is-fullwidth is-primary">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>Projects</span>
+                    </router-link>
+                </li>
+            </ul>
+        </nav>
     </header>
 </template>
 
