@@ -84,4 +84,8 @@
     .link.router-link-active {
         color: var(--dark-active);
     }
+    .is-primary {
+        background-color: var(--dark-box-bg);
+        color: var(--dark-text);
+    }
 }
