@@ -1,5 +1,5 @@
 <template>
-    <div class="notification">
+    <div class="notification" :class="{ 'is-hidden': notifications.length === 0 }">
         <article class="message" :class="context[notification.type]" v-for="notification in notifications"
             :key="notification.id">
             <div class="message-header">
@@ -46,5 +46,9 @@ export default defineComponent({
     width: 300px;
     padding: 1.25rem;
     z-index: 105;
+}
+
+.is-hidden {
+    display: none;
 }
 </style>

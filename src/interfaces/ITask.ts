@@ -1,4 +1,5 @@
 export default interface ITask {
-timeInSeconds: number;
-description: string;
+    timeInSeconds: number;
+    project: { name: string };
+    description: string;
 }

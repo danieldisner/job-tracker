@@ -20,8 +20,9 @@ import IProject from '@/interfaces/IProject';
 import { defineComponent } from 'vue';
 import { useStore } from "@/store";
 import { CREATE_PROJECT, UPDATE_PROJECT } from "@/store/type-mutations";
-import { notificationMixin } from '@/mixins/notify';
 import { NotificationType } from '@/interfaces/INotification';
+
+import useNotify from '@/hooks/notify';
 
 export default defineComponent({
     name: 'ProjectsForm',
@@ -30,7 +31,6 @@ export default defineComponent({
             type: String
         }
     },
-    mixins: [notificationMixin],
     mounted() {
         if (this.id) {
             const project = this.store.state.projects.find((proj: IProject) => proj.id === this.id);
@@ -44,22 +44,27 @@ export default defineComponent({
     },
     methods: {
         save() {
+            var action = 'updated';
             if (this.id) {
                 this.store.commit(UPDATE_PROJECT, {
                     id: this.id,
                     name: this.projectName
                 })
+            } else {
+                action = 'created';
+                this.store.commit(CREATE_PROJECT, this.projectName)
             }
-            this.store.commit(CREATE_PROJECT, this.projectName)
+            this.notify(NotificationType.Success, 'Success', 'Project ' + this.projectName + ' ' + action + ' successfully');
             this.projectName = '';
-            this.notify(NotificationType.Success, 'Success', 'Project created successfully');
             this.$router.push('/projects');
         }
     },
     setup() {
         const store = useStore()
+        const { notify } = useNotify()
         return {
-            store
+            store,
+            notify
         }
     }
 })
