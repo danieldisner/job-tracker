@@ -24,9 +24,10 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import TrackerTimer from './TrackerTimer.vue';
-import { useStore } from 'vuex';
-import { key } from '@/store';
+import { useStore } from '@/store';
+import { NotificationType } from '@/interfaces/INotification';
 import { computed } from 'vue';
+import { notificationMixin } from '@/mixins/notify';
 
 export default defineComponent({
     name: 'MainForm',
@@ -34,6 +35,7 @@ export default defineComponent({
     components: {
         TrackerTimer
     },
+    mixins: [notificationMixin],
     data() {
         return {
             description: '',
@@ -47,12 +49,14 @@ export default defineComponent({
                 description: this.description,
                 project: this.projects.find(proj => proj.id === this.projectId)
             })
+            this.notify(NotificationType.Success, 'Success', 'Task created successfully')
         }
     },
     setup() {
-        const store = useStore(key)
+        const store = useStore()
         return {
-            projects: computed(() => store.state.projects)
+            projects: computed(() => store.state.projects),
+            store
         }
     }
 });

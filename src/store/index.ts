@@ -1,11 +1,13 @@
+import { INotification } from './../interfaces/INotification';
 import IProject from "@/interfaces/IProject";
 import ITask from "@/interfaces/ITask";
 import { InjectionKey } from "vue";
 import { createStore , Store, useStore as useVuexStore } from "vuex";
-import { CREATE_PROJECT, DELETE_PROJECT, UPDATE_PROJECT } from "./type-mutations";
+import { CREATE_PROJECT, DELETE_PROJECT, UPDATE_PROJECT, NOTIFY } from "./type-mutations";
 interface IState {
     tasks: ITask[]
     projects: IProject[]
+    notifications: INotification[]
 }
 
 export const key: InjectionKey<Store<IState>> = Symbol()
@@ -13,7 +15,8 @@ export const key: InjectionKey<Store<IState>> = Symbol()
 export const store = createStore<IState>({
     state: {
         tasks: [],
-        projects: []
+        projects: [],
+        notifications: []
     },
     mutations: {
         createTask(state, tasks: ITask[]) {
@@ -32,6 +35,13 @@ export const store = createStore<IState>({
         },
         [DELETE_PROJECT](state, projectId: string) {
             state.projects = state.projects.filter(project => project.id !== projectId)
+        },
+        [NOTIFY](state, notification: INotification) {
+            notification.id = new Date().getTime();
+            state.notifications.push(notification);
+            setTimeout(() => {
+                state.notifications = state.notifications.filter(notif => notif.id !== notification.id)
+            },3000)
         }
     }
 })
