@@ -38,7 +38,7 @@ import TaskBox from '../components/TaskBox.vue';
 import { useStore } from '@/store';
 import { GET_PROJECTS, GET_TASKS, NEW_TASK } from '@/store/type-actions';
 import ITask from '@/interfaces/ITask';
-import { UPDATE_TASK } from '@/store/type-mutations';
+import { EDIT_TASK } from '@/store/type-actions';
 
 export default defineComponent({
     name: 'App',
@@ -61,7 +61,7 @@ export default defineComponent({
             this.taskSelected = task
         },
         editTask() {
-            this.store.dispatch(UPDATE_TASK, this.taskSelected)
+            this.store.dispatch(EDIT_TASK, this.taskSelected)
             this.closeModal()
         },
         closeModal(): void {
