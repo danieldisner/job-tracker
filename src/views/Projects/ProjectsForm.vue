@@ -19,10 +19,10 @@
 import IProject from '@/interfaces/IProject';
 import { defineComponent } from 'vue';
 import { useStore } from "@/store";
-import { CREATE_PROJECT, UPDATE_PROJECT } from "@/store/type-mutations";
 import { NotificationType } from '@/interfaces/INotification';
 
 import useNotify from '@/hooks/notify';
+import { EDIT_PROJECT, NEW_PROJECT } from '@/store/type-actions';
 
 export default defineComponent({
     name: 'ProjectsForm',
@@ -46,18 +46,21 @@ export default defineComponent({
         save() {
             var action = 'updated';
             if (this.id) {
-                this.store.commit(UPDATE_PROJECT, {
+                this.store.dispatch(EDIT_PROJECT, {
                     id: this.id,
-                    name: this.projectName
-                })
+                    name: this.projectName,
+                }).then(() => this.whenSuccess(action));
             } else {
                 action = 'created';
-                this.store.commit(CREATE_PROJECT, this.projectName)
+                this.store.dispatch(NEW_PROJECT, this.projectName)
+                    .then(() => this.whenSuccess(action));
             }
+        },
+        whenSuccess(action: string) {
             this.notify(NotificationType.Success, 'Success', 'Project ' + this.projectName + ' ' + action + ' successfully');
             this.projectName = '';
             this.$router.push('/projects');
-        }
+        },
     },
     setup() {
         const store = useStore()
