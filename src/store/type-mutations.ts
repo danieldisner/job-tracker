@@ -3,5 +3,9 @@ export const UPDATE_PROJECT = 'UPDATE_PROJECT'
 export const DELETE_PROJECT = 'DELETE_PROJECT'
 export const DEFINE_PROJECTS = 'DEFINE_PROJECTS'
 
-
 export const NOTIFY = 'NOTIFY'
+
+export const CREATE_TASK = 'CREATE_TASK'
+export const UPDATE_TASK = 'UPDATE_TASK'
+export const DELETE_TASK = 'DELETE_TASK'
+export const DEFINE_TASKS = 'DEFINE_TASK'

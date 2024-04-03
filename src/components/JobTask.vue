@@ -1,6 +1,6 @@
 <template>
     <TaskBox>
-        <div class="columns">
+        <div class="columns selectable" @click="taskSelected">
             <div class="column is-4">
                 {{ task.description || 'Task without description' }}
             </div>
@@ -22,6 +22,7 @@ import TaskBox from './TaskBox.vue';
 
 export default defineComponent({
     name: 'JobTask',
+    emits: ['onSelectTask'],
     components: {
         TrackerStopwatch, TaskBox
     },
@@ -29,6 +30,11 @@ export default defineComponent({
         task: {
             type: Object as PropType<ITask>,
             required: true
+        }
+    },
+    methods: {
+        taskSelected(): void {
+            this.$emit('onSelectTask', this.task)
         }
     }
 });

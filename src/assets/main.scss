@@ -18,7 +18,6 @@
     --dark-active: #f8f9fa;
 }
 
-// Estilos padrão para o modo claro
 .main-container {
     background-color: var(--light-bg);
     color: var(--light-text);
@@ -53,7 +52,6 @@
     color: var(--light-active);
 }
 
-// Estilos para o modo escuro
 [data-theme="dark"] {
     .main-container {
         background-color: var(--dark-bg);
@@ -88,4 +86,8 @@
         background-color: var(--dark-box-bg);
         color: var(--dark-text);
     }
+}
+
+.selectable {
+    cursor: pointer;
 }
