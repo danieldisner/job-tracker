@@ -12,7 +12,7 @@ import TimerButton from './TimerButton.vue';
 
 export default defineComponent({
     name: 'TrackerTimer',
-    emits: ['timerFinished'],
+    emits: ['onTimerFinished'],
     components: {
         TrackerStopwatch, TimerButton
     },
@@ -33,7 +33,7 @@ export default defineComponent({
         stop() {
             this.stopwatchWorking = false;
             clearInterval(this.stopwatch)
-            this.$emit('timerFinished', this.timeInSeconds);
+            this.$emit('onTimerFinished', this.timeInSeconds);
             this.timeInSeconds = 0;
         }
     }

@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="column">
-                <TrackerTimer @timerFinished="taskEnded"></TrackerTimer>
+                <TrackerTimer @onTimerFinished="taskEnded"></TrackerTimer>
             </div>
 
         </div>
@@ -55,7 +55,7 @@ export default defineComponent({
     setup() {
         const store = useStore()
         return {
-            projects: computed(() => store.state.projects),
+            projects: computed(() => store.state.project.projects),
             store
         }
     }
