@@ -17,12 +17,13 @@
 </template>
 <script lang="ts">
 import IProject from '@/interfaces/IProject';
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useStore } from "@/store";
 import { NotificationType } from '@/interfaces/INotification';
 
 import useNotify from '@/hooks/notify';
 import { EDIT_PROJECT, NEW_PROJECT } from '@/store/type-actions';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     name: 'ProjectsForm',
@@ -31,43 +32,41 @@ export default defineComponent({
             type: String
         }
     },
-    mounted() {
-        if (this.id) {
-            const project = this.store.state.project.projects.find((proj: IProject) => proj.id === this.id);
-            this.projectName = project?.name || '';
+    setup(props) {
+        const router = useRouter();
+        const store = useStore()
+        const { notify } = useNotify();
+
+        const projectName = ref('');
+
+        if (props.id) {
+            const project = store.state.project.projects.find((proj: IProject) => proj.id === props.id);
+            projectName.value = project?.name || '';
         }
-    },
-    data() {
-        return {
-            projectName: ''
+
+        const whenSuccess = (action: string) => {
+            notify(NotificationType.Success, 'Success', 'Project ' + projectName.value + ' ' + action + ' successfully');
+            projectName.value = '';
+            router.push('/projects');
         }
-    },
-    methods: {
-        save() {
+
+        const save = () => {
             var action = 'updated';
-            if (this.id) {
-                this.store.dispatch(EDIT_PROJECT, {
-                    id: this.id,
-                    name: this.projectName,
-                }).then(() => this.whenSuccess(action));
+            if (props.id) {
+                store.dispatch(EDIT_PROJECT, {
+                    id: props.id,
+                    name: projectName.value,
+                }).then(() => whenSuccess(action));
             } else {
                 action = 'created';
-                this.store.dispatch(NEW_PROJECT, this.projectName)
-                    .then(() => this.whenSuccess(action));
+                store.dispatch(NEW_PROJECT, projectName.value)
+                    .then(() => whenSuccess(action));
             }
-        },
-        whenSuccess(action: string) {
-            this.notify(NotificationType.Success, 'Success', 'Project ' + this.projectName + ' ' + action + ' successfully');
-            this.projectName = '';
-            this.$router.push('/projects');
-        },
-    },
-    setup() {
-        const store = useStore()
-        const { notify } = useNotify()
+        }
+
         return {
-            store,
-            notify
+            projectName,
+            save
         }
     }
 })

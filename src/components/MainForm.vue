@@ -22,11 +22,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, computed, ref } from 'vue';
 import TrackerTimer from './TrackerTimer.vue';
 import { useStore } from '@/store';
 import { NotificationType } from '@/interfaces/INotification';
-import { computed } from 'vue';
 import { notificationMixin } from '@/mixins/notify';
 
 export default defineComponent({
@@ -36,27 +35,27 @@ export default defineComponent({
         TrackerTimer
     },
     mixins: [notificationMixin],
-    data() {
-        return {
-            description: '',
-            projectId: ''
-        }
-    },
-    methods: {
-        taskEnded(elapsedTime: number): void {
-            this.$emit('onSaveTask', {
-                timeInSeconds: elapsedTime,
-                description: this.description,
-                project: this.projects.find(proj => proj.id === this.projectId)
-            })
-            this.notify(NotificationType.Success, 'Success', 'Task created successfully')
-        }
-    },
-    setup() {
+    setup(props, { emit }) {
         const store = useStore()
+        const projects = computed(() => store.state.project.projects)
+
+        const description = ref('')
+        const projectId = ref('')
+
+        const taskEnded = (elapsedTime: number): void => {
+            emit('onSaveTask', {
+                timeInSeconds: elapsedTime,
+                description: description.value,
+                project: projects.value.find(proj => proj.id === projectId.value)
+            })
+            //notify(NotificationType.Success, 'Success', 'Task created successfully')
+        }
+
         return {
-            projects: computed(() => store.state.project.projects),
-            store
+            description,
+            projectId,
+            projects,
+            taskEnded
         }
     }
 });
