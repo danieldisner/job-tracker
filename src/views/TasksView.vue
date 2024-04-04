@@ -1,6 +1,15 @@
 <template>
     <main-form @onSaveTask="saveTask" />
     <div class="list">
+
+        <div class="field">
+            <p class="control has-icons-left has-icons-right">
+                <input class="input" type="text" placeholder="Search for tasks" v-model="searchTask" />
+                <span class="icon is-small is-left">
+                    <i class="fas fa-search"></i>
+                </span>
+            </p>
+        </div>
         <job-task v-for="(task, index) in tasks" :key="index" :task="task" @onSelectTask="selectTask"></job-task>
         <TaskBox v-if="listIsEmpty"> You have no tasks :( </TaskBox>
         <div class="modal" :class="{ 'is-active': taskSelected }" v-if="taskSelected">
@@ -31,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, ref, watchEffect } from 'vue';
 import MainForm from '../components/MainForm.vue';
 import JobTask from '../components/JobTask.vue';
 import TaskBox from '../components/TaskBox.vue';
@@ -77,9 +86,18 @@ export default defineComponent({
         const store = useStore()
         store.dispatch(GET_TASKS)
         store.dispatch(GET_PROJECTS)
+
+        const searchTask = ref('')
+        //const tasks = computed(() => store.state.task.tasks.filter(t => !searchTask.value || t.description.includes(searchTask.value)))
+
+        watchEffect(() => {
+            store.dispatch(GET_TASKS, searchTask.value)
+        })
+
         return {
             tasks: computed(() => store.state.task.tasks),
-            store
+            store,
+            searchTask
         }
     }
 });

@@ -29,8 +29,12 @@ export const task: Module<ITaskState, IState> = {
         },
     },
     actions: {
-        [GET_TASKS]({ commit }) {
-            http.get('tasks')
+        [GET_TASKS]({ commit },filter: string) {
+            let url = 'tasks'
+            if (filter) {
+                url += '?description=' + filter
+            }
+            http.get(url)
             .then(response =>commit(DEFINE_TASKS, response.data))
         },
         [NEW_TASK](context, task : ITask) {
