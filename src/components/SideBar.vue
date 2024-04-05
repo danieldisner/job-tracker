@@ -4,23 +4,20 @@
             <img src="../assets/logo.png" alt="logo">
         </h1>
         <button class="button" @click="toggleDarkMode">{{ darkModeText }}</button>
-        <nav class="panel is-primary mt-5">
-            <p class="panel-heading has-text-centered">
-                Menu
-            </p>
+        <nav class=" is-primary mt-5">
             <ul class="panel-blocks-item">
                 <li>
-                    <router-link to="/" class="link is-block is-fullwidth is-primary">
-                        <i class="fas fa-tasks"></i>
+                    <router-link to="/" class="link is-block is-fullwidth ">
+                        <i class="fas fa-tasks"> </i>
                         <span>Tasks</span>
                     </router-link>
                 </li>
             </ul>
             <ul class="panel-blocks-item">
                 <li>
-                    <router-link to="/projects" class="link is-block is-fullwidth is-primary">
+                    <router-link to="/projects" class="link is-block is-fullwidth">
                         <i class="fas fa-project-diagram"></i>
-                        <span>Projects</span>
+                        <span> Projects</span>
                     </router-link>
                 </li>
             </ul>
@@ -62,5 +59,9 @@ header {
         padding: 2.5rem;
         height: auto;
     }
+}
+
+span {
+    margin-left: 0.5rem;
 }
 </style>
