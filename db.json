@@ -1,4 +1,54 @@
 {
-  "projects": [],
-  "tasks": []
+  "projects": [
+    {
+      "id": "af13",
+      "name": "Job Tracker Frontend"
+    },
+    {
+      "id": "c51f",
+      "name": "Job Tracker Backend"
+    },
+    {
+      "id": "f359",
+      "name": "Job Tracker BUG's"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "716b",
+      "timeInSeconds": 13500,
+      "description": "Implement Dark Mode",
+      "project": {
+        "id": "af13",
+        "name": "Job Tracker Frontend"
+      }
+    },
+    {
+      "id": "9fcc",
+      "timeInSeconds": 15000,
+      "description": "Construct an RestFul API",
+      "project": {
+        "id": "c51f",
+        "name": "Job Tracker Backend"
+      }
+    },
+    {
+      "id": "3a2d",
+      "timeInSeconds": 18500,
+      "description": "Write unit tests for API endpoints",
+      "project": {
+        "id": "c51f",
+        "name": "Job Tracker Backend"
+      }
+    },
+    {
+      "id": "256c",
+      "timeInSeconds": 15502,
+      "description": "Add tests for Dark Mode",
+      "project": {
+        "id": "af13",
+        "name": "Job Tracker Frontend"
+      }
+    }
+  ]
 }
