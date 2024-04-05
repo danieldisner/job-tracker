@@ -20,7 +20,6 @@ import IProject from '@/interfaces/IProject';
 import { defineComponent, ref } from 'vue';
 import { useStore } from "@/store";
 import { NotificationType } from '@/interfaces/INotification';
-
 import useNotify from '@/hooks/notify';
 import { EDIT_PROJECT, NEW_PROJECT } from '@/store/type-actions';
 import { useRouter } from 'vue-router';

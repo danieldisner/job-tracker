@@ -12,30 +12,26 @@
         </div>
         <job-task v-for="(task, index) in tasks" :key="index" :task="task" @onSelectTask="selectTask"></job-task>
         <TaskBox v-if="listIsEmpty"> You have no tasks :( </TaskBox>
-        <div class="modal" :class="{ 'is-active': taskSelected }" v-if="taskSelected">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Edit Task</p>
-                    <button @click="closeModal" class="delete" aria-label="close"></button>
-                </header>
-                <section class="modal-card-body">
-                    <div class="field">
-                        <label for="taskDescription" class="label">Task Description</label>
-                        <div class="control">
-                            <input class="input" type="text" placeholder="Description"
-                                v-model="taskSelected.description">
-                        </div>
+        <ModalCard :showModal="!!taskSelected" v-if="taskSelected">
+            <template v-slot:modal-header>
+                <p class="modal-card-title">Edit Task</p>
+                <button @click="closeModal" class="delete" aria-label="close"></button>
+            </template>
+            <template v-slot:modal-body>
+                <div class="field">
+                    <label for="taskDescription" class="label">Task Description</label>
+                    <div class="control">
+                        <input class="input" type="text" placeholder="Description" v-model="taskSelected.description">
                     </div>
-                </section>
-                <footer class="modal-card-foot">
-                    <div class="buttons">
-                        <button @click="editTask" class="button is-success">Save changes</button>
-                        <button @click="closeModal" class="button">Cancel</button>
-                    </div>
-                </footer>
-            </div>
-        </div>
+                </div>
+            </template>
+            <template v-slot:modal-footer>
+                <div class="buttons">
+                    <button @click="editTask" class="button is-success">Save changes</button>
+                    <button @click="closeModal" class="button">Cancel</button>
+                </div>
+            </template>
+        </ModalCard>
     </div>
 </template>
 
@@ -48,6 +44,7 @@ import { useStore } from '@/store';
 import { GET_PROJECTS, GET_TASKS, NEW_TASK } from '@/store/type-actions';
 import ITask from '@/interfaces/ITask';
 import { EDIT_TASK } from '@/store/type-actions';
+import ModalCard from '@/components/ModalCard.vue';
 
 export default defineComponent({
     name: 'App',
@@ -55,7 +52,8 @@ export default defineComponent({
     components: {
         MainForm,
         JobTask,
-        TaskBox
+        TaskBox,
+        ModalCard
     },
     data() {
         return {

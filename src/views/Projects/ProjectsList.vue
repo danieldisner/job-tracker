@@ -55,22 +55,49 @@
 
 <script lang="ts">
 import { useStore } from '@/store';
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { GET_PROJECTS, REMOVE_PROJECT } from '@/store/type-actions';
+import useNotify from '@/hooks/notify';
+import IProject from '@/interfaces/IProject';
+import { NotificationType } from '@/interfaces/INotification';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     name: 'ProjectsList',
-    methods: {
-        deleteProject(id: string) {
-            this.store.dispatch(REMOVE_PROJECT, id);
+    props: {
+        id: {
+            type: String
         }
     },
-    setup() {
+    setup(props) {
+        const router = useRouter();
         const store = useStore()
         store.dispatch(GET_PROJECTS)
+        const { notify } = useNotify();
+
+        const projectName = ref('');
+
+        if (props.id) {
+            const project = store.state.project.projects.find((proj: IProject) => proj.id === props.id);
+            projectName.value = project?.name || '';
+        }
+
+        const whenSuccess = (action: string) => {
+            notify(NotificationType.Success, 'Success', 'Project ' + projectName.value + ' ' + action + ' successfully');
+            projectName.value = '';
+            router.push('/projects');
+        }
+
+        const deleteProject = (id: string) => {
+            var action = 'delete';
+            store.dispatch(REMOVE_PROJECT, id)
+                .then(() => whenSuccess(action));
+        }
+
         return {
             projects: computed(() => store.state.project.projects),
-            store
+            store,
+            deleteProject
         }
     }
 })
