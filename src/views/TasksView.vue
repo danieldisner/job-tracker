@@ -27,7 +27,9 @@
             </template>
             <template v-slot:modal-footer>
                 <div class="buttons">
+
                     <button @click="editTask" class="button is-success">Save changes</button>
+                    <button @click="deleteTask" class="button is-danger">Delete Task</button>
                     <button @click="closeModal" class="button">Cancel</button>
                 </div>
             </template>
@@ -41,7 +43,7 @@ import MainForm from '../components/MainForm.vue';
 import JobTask from '../components/JobTask.vue';
 import TaskBox from '../components/TaskBox.vue';
 import { useStore } from '@/store';
-import { GET_PROJECTS, GET_TASKS, NEW_TASK } from '@/store/type-actions';
+import { GET_PROJECTS, GET_TASKS, NEW_TASK, REMOVE_TASK } from '@/store/type-actions';
 import ITask from '@/interfaces/ITask';
 import { EDIT_TASK } from '@/store/type-actions';
 import ModalCard from '@/components/ModalCard.vue';
@@ -71,8 +73,13 @@ export default defineComponent({
             this.store.dispatch(EDIT_TASK, this.taskSelected)
             this.closeModal()
         },
+        deleteTask() {
+            this.store.dispatch(REMOVE_TASK, this.taskSelected?.id)
+            this.closeModal()
+        },
         closeModal(): void {
             this.taskSelected = null
+            this.store.dispatch(GET_TASKS)
         }
     },
     computed: {
